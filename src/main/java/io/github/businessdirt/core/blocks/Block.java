@@ -1,49 +1,68 @@
 package io.github.businessdirt.core.blocks;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import io.github.businessdirt.core.rendering.DyeImage;
+import io.github.businessdirt.core.rendering.Gui;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class Block {
 
-    private List<int[]> blocks = new ArrayList<>();
+    public static BufferedImage texture = new BufferedImage(8 , 8 , BufferedImage.TYPE_INT_ARGB);
 
-    public Block() {
-        Random random = new Random();
-        int i = random.nextInt(7);
-        switch (i) {
-            case 0:
-                new Block(BlockType.BLOCK_L);
-                break;
-            case 1:
-                new Block(BlockType.BLOCK_L_INVERTED);
-                break;
-            case 2:
-                new Block(BlockType.BLOCK_Z);
-                break;
-            case 3:
-                new Block(BlockType.BLOCK_Z_INVERTED);
-                break;
-            case 4:
-                new Block(BlockType.BLOCK_LINE);
-                break;
-            case 5:
-                new Block(BlockType.BLOCK_SQUARE);
-                break;
-            case 6:
-                new Block(BlockType.BLOCK_T);
-                break;
-            default:
-                System.out.println("error");
-                break;
+    private int x;
+    private int y;
+
+    public Block(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public void drawSingleBlock(Graphics g, int relX, int relY, Color color) {
+        g.drawImage(DyeImage.dye(texture, new Color(color.getRed(), color.getGreen(), color.getBlue(), 64)).getScaledInstance(Gui.getBlockSize(), Gui.getBlockSize(), Image.SCALE_SMOOTH), relX, relY, null);
+    }
+
+    public static void generateTexture(boolean save) {
+        Graphics2D g2d = texture.createGraphics();
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setColor(Color.LIGHT_GRAY);
+        g2d.fillRect(0, 0, 7, 1);
+        g2d.fillRect(0, 1, 1, 6);
+        g2d.setColor(Color.GRAY);
+        g2d.fillRect(1, 1, 6, 6);
+        g2d.setColor(Color.DARK_GRAY);
+        g2d.fillRect(0, 7, 8, 1);
+        g2d.fillRect(7, 0, 1, 7);
+        g2d.dispose();
+
+        if (save) {
+            try {
+                File file = new File("texture.png");
+                ImageIO.write(texture, "png", file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
+        System.out.println("Block Texture generated!");
     }
 
-    public Block(BlockType blockType) {
-        System.out.println(String.valueOf(blockType));
+    public int getX() {
+        return x;
     }
 
-    public enum BlockType {
-        BLOCK_L, BLOCK_L_INVERTED, BLOCK_Z, BLOCK_Z_INVERTED, BLOCK_LINE, BLOCK_SQUARE, BLOCK_T
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 }

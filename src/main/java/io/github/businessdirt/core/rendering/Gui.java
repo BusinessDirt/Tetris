@@ -10,8 +10,9 @@ public class Gui {
     private static final int width = 1280;
     private static final int height = 780;
 
-    public Gui() {
+    private static int blockSize;
 
+    public Gui() {
         jf = new JFrame();
         jf.setSize(width,height);
         jf.setResizable(true);
@@ -42,5 +43,9 @@ public class Gui {
 
     public static int getHeight() {
         return jf.getHeight();
+    }
+
+    public static int getBlockSize() {
+        return 600/10;
     }
 }
