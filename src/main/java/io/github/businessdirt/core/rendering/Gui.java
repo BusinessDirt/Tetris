@@ -46,6 +46,6 @@ public class Gui {
     }
 
     public static int getBlockSize() {
-        return 600/10;
+        return (getHeight() - 50 - 49) / 20;
     }
 }

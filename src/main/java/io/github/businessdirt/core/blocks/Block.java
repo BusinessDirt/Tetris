@@ -1,5 +1,6 @@
 package io.github.businessdirt.core.blocks;
 
+import io.github.businessdirt.core.rendering.Draw;
 import io.github.businessdirt.core.rendering.DyeImage;
 import io.github.businessdirt.core.rendering.Gui;
 
@@ -11,21 +12,18 @@ import java.io.IOException;
 
 public class Block {
 
-    public static BufferedImage texture = new BufferedImage(8 , 8 , BufferedImage.TYPE_INT_ARGB);
+    public static BufferedImage texture = generateTexture();
+    public static int[][] map = new int[20][10];
 
-    private int x;
-    private int y;
+    private Point position;
 
     public Block(int x, int y) {
-        this.x = x;
-        this.y = y;
+        map[y][x] = 1;
+        position = ptc(x, y);
     }
 
-    public void drawSingleBlock(Graphics g, int relX, int relY, Color color) {
-        g.drawImage(DyeImage.dye(texture, new Color(color.getRed(), color.getGreen(), color.getBlue(), 64)).getScaledInstance(Gui.getBlockSize(), Gui.getBlockSize(), Image.SCALE_SMOOTH), relX, relY, null);
-    }
-
-    public static void generateTexture(boolean save) {
+    public static BufferedImage generateTexture() {
+        BufferedImage texture = new BufferedImage(8 , 8 , BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = texture.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setColor(Color.LIGHT_GRAY);
@@ -38,31 +36,18 @@ public class Block {
         g2d.fillRect(7, 0, 1, 7);
         g2d.dispose();
 
-        if (save) {
-            try {
-                File file = new File("texture.png");
-                ImageIO.write(texture, "png", file);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        System.out.println("Block Texture generated!");
+        return texture;
     }
 
-    public int getX() {
-        return x;
+    public Point getPosition() {
+        return position;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void setPosition(Point position) {
+        this.position = position;
     }
 
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
+    public Point ptc(int x, int y) {
+        return new Point(Draw.getGameXStart() + x * Gui.getBlockSize(), Draw.getGameYStart() + y * Gui.getBlockSize());
     }
 }
