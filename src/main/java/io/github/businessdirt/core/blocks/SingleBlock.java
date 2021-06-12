@@ -10,15 +10,37 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Block {
+public class SingleBlock {
 
     public static BufferedImage texture = generateTexture();
-    public static int[][] map = new int[20][10];
+    public static int[][] map = new int[10][20];
 
     private Point position;
 
-    public Block(int x, int y) {
-        map[y][x] = 1;
+    public SingleBlock(int x, int y, BlockType type) {
+        switch (type) {
+            case I:
+                map[x][y] = 1;
+                break;
+            case O:
+                map[x][y] = 2;
+                break;
+            case S:
+                map[x][y] = 3;
+                break;
+            case Z:
+                map[x][y] = 4;
+                break;
+            case J:
+                map[x][y] = 5;
+                break;
+            case L:
+                map[x][y] = 6;
+                break;
+            case T:
+                map[x][y] = 7;
+                break;
+        }
         position = ptc(x, y);
     }
 

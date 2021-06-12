@@ -27,10 +27,28 @@ public class Draw extends JLabel {
         g.setColor(Color.white);
         g.drawRect(Draw.getGameXStart() - 1, Draw.getGameYStart() - 1, Gui.getBlockSize() * 10 + 1, Gui.getBlockSize() * 20 +1);
 
-        for (int x = 0; x < Block.map[0].length; x++) {
-            for (int y = 0; y < Block.map.length; y++) {
-                if (Block.map[y][x] == 1) {
-                    g.drawImage(Block.texture.getScaledInstance(Gui.getBlockSize(), Gui.getBlockSize(), Image.SCALE_SMOOTH), getGameXStart() + x * Gui.getBlockSize(), getGameYStart() + y * Gui.getBlockSize(), null);
+        for (int x = 0; x < SingleBlock.map.length; x++) {
+            for (int y = 0; y < SingleBlock.map[0].length; y++) {
+                if (SingleBlock.map[x][y] == 1) {
+                    g.drawImage(DyeImage.dye(SingleBlock.texture, new Color(88, 242, 242, 128)).getScaledInstance(Gui.getBlockSize(), Gui.getBlockSize(), Image.SCALE_SMOOTH), getGameXStart() + x * Gui.getBlockSize(), getGameYStart() + y * Gui.getBlockSize(), null);
+                }
+                if (SingleBlock.map[x][y] == 2) {
+                    g.drawImage(DyeImage.dye(SingleBlock.texture, new Color(254, 231, 92, 128)).getScaledInstance(Gui.getBlockSize(), Gui.getBlockSize(), Image.SCALE_SMOOTH), getGameXStart() + x * Gui.getBlockSize(), getGameYStart() + y * Gui.getBlockSize(), null);
+                }
+                if (SingleBlock.map[x][y] == 3) {
+                    g.drawImage(DyeImage.dye(SingleBlock.texture, new Color(87, 242, 135, 128)).getScaledInstance(Gui.getBlockSize(), Gui.getBlockSize(), Image.SCALE_SMOOTH), getGameXStart() + x * Gui.getBlockSize(), getGameYStart() + y * Gui.getBlockSize(), null);
+                }
+                if (SingleBlock.map[x][y] == 4) {
+                    g.drawImage(DyeImage.dye(SingleBlock.texture, new Color(237, 66, 69, 128)).getScaledInstance(Gui.getBlockSize(), Gui.getBlockSize(), Image.SCALE_SMOOTH), getGameXStart() + x * Gui.getBlockSize(), getGameYStart() + y * Gui.getBlockSize(), null);
+                }
+                if (SingleBlock.map[x][y] == 5) {
+                    g.drawImage(DyeImage.dye(SingleBlock.texture, new Color(88, 101, 242, 128)).getScaledInstance(Gui.getBlockSize(), Gui.getBlockSize(), Image.SCALE_SMOOTH), getGameXStart() + x * Gui.getBlockSize(), getGameYStart() + y * Gui.getBlockSize(), null);
+                }
+                if (SingleBlock.map[x][y] == 6) {
+                    g.drawImage(DyeImage.dye(SingleBlock.texture, new Color(237, 121, 35, 128)).getScaledInstance(Gui.getBlockSize(), Gui.getBlockSize(), Image.SCALE_SMOOTH), getGameXStart() + x * Gui.getBlockSize(), getGameYStart() + y * Gui.getBlockSize(), null);
+                }
+                if (SingleBlock.map[x][y] == 7) {
+                    g.drawImage(DyeImage.dye(SingleBlock.texture, new Color(235, 69, 158, 128)).getScaledInstance(Gui.getBlockSize(), Gui.getBlockSize(), Image.SCALE_SMOOTH), getGameXStart() + x * Gui.getBlockSize(), getGameYStart() + y * Gui.getBlockSize(), null);
                 }
             }
         }
