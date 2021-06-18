@@ -30,25 +30,25 @@ public class Draw extends JLabel {
         for (int x = 0; x < SingleBlock.map.length; x++) {
             for (int y = 0; y < SingleBlock.map[0].length; y++) {
                 if (SingleBlock.map[x][y] == 1) {
-                    g.drawImage(DyeImage.dye(SingleBlock.texture, new Color(88, 242, 242, 128)).getScaledInstance(Gui.getBlockSize(), Gui.getBlockSize(), Image.SCALE_SMOOTH), getGameXStart() + x * Gui.getBlockSize(), getGameYStart() + y * Gui.getBlockSize(), null);
+                    g.drawImage(DyeImage.dye(SingleBlock.getTexture(), new Color(88, 242, 242, 128)).getScaledInstance(Gui.getBlockSize(), Gui.getBlockSize(), Image.SCALE_SMOOTH), getGameXStart() + x * Gui.getBlockSize(), getGameYStart() + y * Gui.getBlockSize(), null);
                 }
                 if (SingleBlock.map[x][y] == 2) {
-                    g.drawImage(DyeImage.dye(SingleBlock.texture, new Color(254, 231, 92, 128)).getScaledInstance(Gui.getBlockSize(), Gui.getBlockSize(), Image.SCALE_SMOOTH), getGameXStart() + x * Gui.getBlockSize(), getGameYStart() + y * Gui.getBlockSize(), null);
+                    g.drawImage(DyeImage.dye(SingleBlock.getTexture(), new Color(254, 231, 92, 128)).getScaledInstance(Gui.getBlockSize(), Gui.getBlockSize(), Image.SCALE_SMOOTH), getGameXStart() + x * Gui.getBlockSize(), getGameYStart() + y * Gui.getBlockSize(), null);
                 }
                 if (SingleBlock.map[x][y] == 3) {
-                    g.drawImage(DyeImage.dye(SingleBlock.texture, new Color(87, 242, 135, 128)).getScaledInstance(Gui.getBlockSize(), Gui.getBlockSize(), Image.SCALE_SMOOTH), getGameXStart() + x * Gui.getBlockSize(), getGameYStart() + y * Gui.getBlockSize(), null);
+                    g.drawImage(DyeImage.dye(SingleBlock.getTexture(), new Color(87, 242, 135, 128)).getScaledInstance(Gui.getBlockSize(), Gui.getBlockSize(), Image.SCALE_SMOOTH), getGameXStart() + x * Gui.getBlockSize(), getGameYStart() + y * Gui.getBlockSize(), null);
                 }
                 if (SingleBlock.map[x][y] == 4) {
-                    g.drawImage(DyeImage.dye(SingleBlock.texture, new Color(237, 66, 69, 128)).getScaledInstance(Gui.getBlockSize(), Gui.getBlockSize(), Image.SCALE_SMOOTH), getGameXStart() + x * Gui.getBlockSize(), getGameYStart() + y * Gui.getBlockSize(), null);
+                    g.drawImage(DyeImage.dye(SingleBlock.getTexture(), new Color(237, 66, 69, 128)).getScaledInstance(Gui.getBlockSize(), Gui.getBlockSize(), Image.SCALE_SMOOTH), getGameXStart() + x * Gui.getBlockSize(), getGameYStart() + y * Gui.getBlockSize(), null);
                 }
                 if (SingleBlock.map[x][y] == 5) {
-                    g.drawImage(DyeImage.dye(SingleBlock.texture, new Color(88, 101, 242, 128)).getScaledInstance(Gui.getBlockSize(), Gui.getBlockSize(), Image.SCALE_SMOOTH), getGameXStart() + x * Gui.getBlockSize(), getGameYStart() + y * Gui.getBlockSize(), null);
+                    g.drawImage(DyeImage.dye(SingleBlock.getTexture(), new Color(88, 101, 242, 128)).getScaledInstance(Gui.getBlockSize(), Gui.getBlockSize(), Image.SCALE_SMOOTH), getGameXStart() + x * Gui.getBlockSize(), getGameYStart() + y * Gui.getBlockSize(), null);
                 }
                 if (SingleBlock.map[x][y] == 6) {
-                    g.drawImage(DyeImage.dye(SingleBlock.texture, new Color(237, 121, 35, 128)).getScaledInstance(Gui.getBlockSize(), Gui.getBlockSize(), Image.SCALE_SMOOTH), getGameXStart() + x * Gui.getBlockSize(), getGameYStart() + y * Gui.getBlockSize(), null);
+                    g.drawImage(DyeImage.dye(SingleBlock.getTexture(), new Color(237, 121, 35, 128)).getScaledInstance(Gui.getBlockSize(), Gui.getBlockSize(), Image.SCALE_SMOOTH), getGameXStart() + x * Gui.getBlockSize(), getGameYStart() + y * Gui.getBlockSize(), null);
                 }
                 if (SingleBlock.map[x][y] == 7) {
-                    g.drawImage(DyeImage.dye(SingleBlock.texture, new Color(235, 69, 158, 128)).getScaledInstance(Gui.getBlockSize(), Gui.getBlockSize(), Image.SCALE_SMOOTH), getGameXStart() + x * Gui.getBlockSize(), getGameYStart() + y * Gui.getBlockSize(), null);
+                    g.drawImage(DyeImage.dye(SingleBlock.getTexture(), new Color(235, 69, 158, 128)).getScaledInstance(Gui.getBlockSize(), Gui.getBlockSize(), Image.SCALE_SMOOTH), getGameXStart() + x * Gui.getBlockSize(), getGameYStart() + y * Gui.getBlockSize(), null);
                 }
             }
         }
