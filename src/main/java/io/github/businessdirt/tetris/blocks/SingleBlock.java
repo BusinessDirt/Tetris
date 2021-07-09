@@ -1,8 +1,6 @@
 package io.github.businessdirt.tetris.blocks;
 
 import io.github.businessdirt.Main;
-import io.github.businessdirt.tetris.rendering.Draw;
-import io.github.businessdirt.tetris.rendering.Gui;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -11,11 +9,9 @@ public class SingleBlock {
 
     private int x, y;
     private static BufferedImage texture;
-    private BlockType type;
+    private final BlockType type;
     public static int[][] map = new int[10][20];
     private boolean rotationCenter;
-
-    private Point position;
 
     public SingleBlock(int x, int y, BlockType type) {
         this(x, y, type, false);
@@ -52,11 +48,6 @@ public class SingleBlock {
                 map[x][y] = 7;
                 break;
         }
-        position = ptc(x, y);
-    }
-
-    private void addToFocusedBlocks(SingleBlock block) {
-        Main.getFocusedBlocks().add(block);
     }
 
     public static BufferedImage getTexture() {
@@ -75,13 +66,6 @@ public class SingleBlock {
             g2d.dispose();
         }
         return texture;
-    }
-
-    public Point getPosition() {
-        return position;
-    }
-    public void setPosition(Point position) {
-        this.position = position;
     }
 
     public int getX() {
@@ -107,9 +91,5 @@ public class SingleBlock {
     }
     public void setRotationCenter(boolean rotationCenter) {
         this.rotationCenter = rotationCenter;
-    }
-
-    public Point ptc(int x, int y) {
-        return new Point(Draw.getGameXStart() + x * Gui.getBlockSize(), Draw.getGameYStart() + y * Gui.getBlockSize());
     }
 }

@@ -9,13 +9,17 @@ import static javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW;
 
 public class KeyBinding {
 
-    private static JLabel listener = new JLabel();
+    private static final JLabel listener = new JLabel();
+    private final int keyCode;
+    private final int modifier;
 
     public KeyBinding(int keyCode, AbstractAction action) {
         this(keyCode, action, getModifier(keyCode));
     }
 
     private KeyBinding(int key, AbstractAction action, int modifier) {
+        this.keyCode = key;
+        this.modifier = modifier;
         listener.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(key, modifier), key);
         listener.getActionMap().put(key, action);
     }
@@ -35,5 +39,12 @@ public class KeyBinding {
 
     public static JLabel getKeyListener() {
         return listener;
+    }
+
+    public int getKeyCode() {
+        return keyCode;
+    }
+    public int getModifier() {
+        return modifier;
     }
 }

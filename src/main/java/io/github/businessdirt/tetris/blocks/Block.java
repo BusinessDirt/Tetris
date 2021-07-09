@@ -4,6 +4,8 @@ import io.github.businessdirt.Main;
 import io.github.businessdirt.tetris.GameState;
 import io.github.businessdirt.tetris.rendering.Draw;
 
+import java.util.Arrays;
+
 public class Block {
 
     public Block() {
@@ -18,32 +20,32 @@ public class Block {
             new SingleBlock(x, y, type, true);
             switch (type) {
                 case I:
-                    new SingleBlock(x, y - 1, BlockType.I);
+                    new SingleBlock(x, 0, BlockType.I);
                     new SingleBlock(x, y + 1, BlockType.I);
                     new SingleBlock(x, y + 2, BlockType.I);
                     break;
                 case O:
-                    new SingleBlock(x, y - 1, BlockType.O);
-                    new SingleBlock(x - 1, y - 1, BlockType.O);
+                    new SingleBlock(x, 0, BlockType.O);
+                    new SingleBlock(x - 1, 0, BlockType.O);
                     new SingleBlock(x - 1, y, BlockType.O);
                     break;
                 case S:
-                    new SingleBlock(x, y - 1, BlockType.S);
-                    new SingleBlock(x + 1, y - 1, BlockType.S);
+                    new SingleBlock(x, 0, BlockType.S);
+                    new SingleBlock(x + 1, 0, BlockType.S);
                     new SingleBlock(x - 1, y, BlockType.S);
                     break;
                 case Z:
-                    new SingleBlock(x, y - 1, BlockType.Z);
-                    new SingleBlock(x - 1, y - 1, BlockType.Z);
+                    new SingleBlock(x, 0, BlockType.Z);
+                    new SingleBlock(x - 1, 0, BlockType.Z);
                     new SingleBlock(x + 1, y, BlockType.Z);
                     break;
                 case J:
-                    new SingleBlock(x, y - 1, BlockType.J);
+                    new SingleBlock(x, 0, BlockType.J);
                     new SingleBlock(x, y + 1, BlockType.J);
                     new SingleBlock(x - 1, y + 1, BlockType.J);
                     break;
                 case L:
-                    new SingleBlock(x, y - 1, BlockType.L);
+                    new SingleBlock(x, 0, BlockType.L);
                     new SingleBlock(x, y + 1, BlockType.L);
                     new SingleBlock(x + 1, y + 1, BlockType.L);
                     break;
@@ -56,9 +58,7 @@ public class Block {
         } else {
             Main.setGameState(GameState.GAMEOVER);
             for (int x2 = 0; x2 < SingleBlock.map.length; x2++) {
-                for (int y2 = 0; y2 < SingleBlock.map[x2].length; y2++) {
-                    SingleBlock.map[x2][y2] = 0;
-                }
+                Arrays.fill(SingleBlock.map[x2], 0);
             }
             Main.setCurrentBlock(new Block(Main.getNextBlock()));
             Main.setNextBlock(BlockType.random());

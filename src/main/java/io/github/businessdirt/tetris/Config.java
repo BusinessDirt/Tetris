@@ -9,6 +9,8 @@ import java.io.File;
 
 public class Config extends ConfigHandler {
 
+    private static Config config;
+
     @Property(
             type = PropertyType.SLIDER,
             name = "High Score",
@@ -28,5 +30,12 @@ public class Config extends ConfigHandler {
     public Config() {
         super(new File(Main.getConfigFolder(), "\\config.toml"));
         initialize();
+    }
+
+    public static Config getConfig() {
+        if (config == null) {
+            config = new Config();
+        }
+        return config;
     }
 }

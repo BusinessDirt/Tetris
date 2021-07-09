@@ -22,7 +22,6 @@ public class Main {
     private static int score = 0;
     private static Block current;
     private static BlockType next = BlockType.random();
-    private static Config config;
     private static File configFolder;
 
     public static void main(String[] args) {
@@ -30,13 +29,13 @@ public class Main {
         System.out.println("Config Files: " + configFolder.getAbsolutePath());
         configFolder.mkdirs();
 
-        getConfig().preload();
+        Config.getConfig().preload();
 
         new Gui();
         gameState = GameState.TITLE;
 
         Draw.setNewBlockMap(next);
-        current = new Block();
+        setCurrentBlock(new Block());
         new GameClock().start();
     }
 
@@ -83,12 +82,6 @@ public class Main {
         Main.next = next;
     }
 
-    public static Config getConfig() {
-        if (config == null) {
-            config = new Config();
-        }
-        return config;
-    }
     public static File getConfigFolder() {
         return configFolder;
     }

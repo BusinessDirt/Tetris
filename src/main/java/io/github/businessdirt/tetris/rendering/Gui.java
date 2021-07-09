@@ -4,7 +4,6 @@ import io.github.businessdirt.Main;
 import io.github.businessdirt.tetris.GameClock;
 import io.github.businessdirt.tetris.GameState;
 import io.github.businessdirt.tetris.actions.KeyBinding;
-import io.github.businessdirt.tetris.blocks.Block;
 import io.github.businessdirt.tetris.blocks.BlockType;
 import io.github.businessdirt.tetris.blocks.SingleBlock;
 
@@ -17,13 +16,10 @@ import java.util.List;
 
 public class Gui {
     private static JFrame jf;
-    private static Draw draw;
+    private static int lastExtendedState = JFrame.NORMAL;
 
     private static final int width = 1280;
     private static final int height = 780;
-
-    private static int blockSize;
-    private static int NULL = 69420;
 
     public Gui() {
         jf = new JFrame();
@@ -31,13 +27,14 @@ public class Gui {
         jf.setResizable(true);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.setLocationRelativeTo(null);
+        jf.setExtendedState(lastExtendedState);
         jf.setMinimumSize(new Dimension(width, height));
         jf.setTitle("Tetris");
 
         jf.add(KeyBinding.getKeyListener());
         registerKeyBinds();
 
-        draw = new Draw();
+        Draw draw = new Draw();
         jf.setBounds(0, 0, width, height);
         draw.setVisible(true);
         jf.add(draw);
@@ -96,7 +93,6 @@ public class Gui {
                             SingleBlock.map[block.getX()][block.getY()] = 0;
                         }
                         newMap[0] = SingleBlock.map;
-                        List<SingleBlock> oldCoordinates = Main.getFocusedBlocks();
                         for (SingleBlock block : Main.getFocusedBlocks()) {
                             newMap[0][block.getX() - 1][block.getY()] = block.getType().getIntValue();
                             block.setX(block.getX() - 1);
@@ -135,7 +131,6 @@ public class Gui {
                             SingleBlock.map[block.getX()][block.getY()] = 0;
                         }
                         newMap[0] = SingleBlock.map;
-                        List<SingleBlock> oldCoordinates = Main.getFocusedBlocks();
                         for (SingleBlock block : Main.getFocusedBlocks()) {
                             newMap[0][block.getX() + 1][block.getY()] = block.getType().getIntValue();
                             block.setX(block.getX() + 1);
@@ -152,12 +147,11 @@ public class Gui {
                 BlockType type = Main.getFocusedBlocks().size() == 0 ? null : Main.getFocusedBlocks().get(Main.getFocusedBlocks().size() - 1).getType();
                 int[][] newMap = SingleBlock.map;
                 Point rotationCoordinate = new Point();
-                List<Point> coordinates = new ArrayList<>();
                 for (SingleBlock block : Main.getFocusedBlocks()) {
                     if (block.isRotationCenter()) rotationCoordinate.setLocation(block.getX(), block.getY());
                 }
 
-                if (type != null && coordinates != null && Main.getGameState() == GameState.INGAME) {
+                if (type != null && Main.getGameState() == GameState.INGAME) {
                     for (SingleBlock block : Main.getFocusedBlocks()) {
                         SingleBlock.map[block.getX()][block.getY()] = 0;
                     }
@@ -905,8 +899,8 @@ public class Gui {
         new KeyBinding(KeyEvent.VK_DOWN, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int[][] newMap = new int[SingleBlock.map.length][SingleBlock.map[0].length];
-                if (!GameClock.checkForBottom(Main.getFocusedBlocks()) && !GameClock.checkForBlock(Main.getFocusedBlocks(), newMap, SingleBlock.map) && Main.getGameState() == GameState.INGAME) {
+                int[][] newMap;
+                if (GameClock.checkForBottom(Main.getFocusedBlocks()) && GameClock.checkForBlock(Main.getFocusedBlocks(), SingleBlock.map) && Main.getGameState() == GameState.INGAME) {
                     for (SingleBlock block : Main.getFocusedBlocks()) {
                         SingleBlock.map[block.getX()][block.getY()] = 0;
                     }
@@ -937,13 +931,23 @@ public class Gui {
                 }
             }
         });
+
+        new KeyBinding(KeyEvent.VK_F11, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Gui.getJf().getExtendedState() == JFrame.MAXIMIZED_BOTH) {
+                    Gui.getJf().setExtendedState(getLastExtendedState());
+                    setLastExtendedState(JFrame.MAXIMIZED_BOTH);
+                } else {
+                    setLastExtendedState(Gui.getJf().getExtendedState());
+                    Gui.getJf().setExtendedState(JFrame.MAXIMIZED_BOTH);
+                }
+            }
+        });
     }
 
     public static JFrame getJf() {
         return jf;
-    }
-    public static Draw getDraw() {
-        return draw;
     }
 
     public static int getWidth() {
@@ -954,5 +958,12 @@ public class Gui {
     }
     public static int getBlockSize() {
         return (getHeight() - 50 - 49) / 20;
+    }
+
+    public static int getLastExtendedState() {
+        return lastExtendedState;
+    }
+    public static void setLastExtendedState(int lastExtendedState) {
+        Gui.lastExtendedState = lastExtendedState;
     }
 }

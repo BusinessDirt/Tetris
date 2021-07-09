@@ -12,7 +12,6 @@ import java.util.List;
 
 public class GameClock extends Thread {
 
-    private static int[][] newMap = new int[SingleBlock.map.length][SingleBlock.map[0].length];
     private static final int gameSpeed = 400;
 
     public void run() {
@@ -28,12 +27,12 @@ public class GameClock extends Thread {
             }
             if (Main.getGameState() == GameState.INGAME) {
                 //move block down
-                if (!checkForBottom(Main.getFocusedBlocks()) && !checkForBlock(Main.getFocusedBlocks(), newMap, SingleBlock.map)) {
+                if (checkForBottom(Main.getFocusedBlocks()) && checkForBlock(Main.getFocusedBlocks(), SingleBlock.map)) {
                     for (SingleBlock block : Main.getFocusedBlocks()) {
                         SingleBlock.map[block.getX()][block.getY()] = 0;
                     }
 
-                    newMap = SingleBlock.map;
+                    int[][] newMap = SingleBlock.map;
                     for (SingleBlock block : Main.getFocusedBlocks()) {
                         newMap[block.getX()][block.getY() + 1] = block.getType().getIntValue();
                         block.setY(block.getY() + 1);
@@ -58,15 +57,12 @@ public class GameClock extends Thread {
         for (SingleBlock block : blockList) {
             if (block.getY() >= lowestYValue) lowestYValue = block.getY() + 1;
         }
-        if (lowestYValue == SingleBlock.map[0].length) {
-            return true;
-        }
-        return false;
+        return lowestYValue != SingleBlock.map[0].length;
     }
 
     public static void removeRow(int row, int multiplier) {
-        for (int i = 0; i < SingleBlock.map.length; i++) {
-            SingleBlock.map[i][row] = 0;
+        for (int x = 0; x < SingleBlock.map.length; x++) {
+            SingleBlock.map[x][row] = 0;
         }
 
         for (int y = row; y > 1; y--) {
@@ -103,8 +99,8 @@ public class GameClock extends Thread {
                     case 4:
                         scoreToAdd += 900;
                         Config.tetrisCount += 1;
-                        Main.getConfig().markDirty();
-                        Main.getConfig().writeData();
+                        Config.getConfig().markDirty();
+                        Config.getConfig().writeData();
                         break;
                     default:
                         break;
@@ -114,20 +110,18 @@ public class GameClock extends Thread {
             } else {
                 blocksInRow = 0;
             }
-
         }
 
         Main.setScore(Main.getScore() + scoreToAdd);
-        scoreToAdd = 0;
 
         if (Main.getScore() > Config.highScore) {
             Config.highScore = Main.getScore();
-            Main.getConfig().markDirty();
-            Main.getConfig().writeData();
+            Config.getConfig().markDirty();
+            Config.getConfig().writeData();
         }
     }
 
-    public static boolean checkForBlock(List<SingleBlock> blockList, int[][] newMap, int[][] oldMap) {
+    public static boolean checkForBlock(List<SingleBlock> blockList, int[][] oldMap) {
         List<Point> blockCoordinates = new ArrayList<>();
         for (SingleBlock block : blockList) {
             if (!blockCoordinates.contains(new Point(block.getX(), block.getY()))) blockCoordinates.add(new Point(block.getX(), block.getY()));
@@ -137,12 +131,10 @@ public class GameClock extends Thread {
             //check if space below is free
             if (oldMap[(int) (coordinate.getX())][(int) coordinate.getY() + 1] > 0) {
                 //check if block below belongs to the focused Block
-                if (!blockCoordinates.contains(new Point((int) coordinate.getX(), (int) coordinate.getY() + 1))) {
-                    return true;
-                }
+                if (!blockCoordinates.contains(new Point((int) coordinate.getX(), (int) coordinate.getY() + 1))) return false;
             }
         }
 
-        return false;
+        return true;
     }
 }
